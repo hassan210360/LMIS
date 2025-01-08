@@ -1,0 +1,7 @@
+CREATE TABLE Quizzes (
+    QuizID INT IDENTITY(1,1) PRIMARY KEY,
+    UserName NVARCHAR(50) NOT NULL,
+    QuizName NVARCHAR(50) NOT NULL,
+    DateTimeTaken DATETIME NOT NULL,
+    Score INT NOT NULL
+);

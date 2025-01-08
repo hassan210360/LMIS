@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+</head>
+<body>
+    <h1>Quiz Results</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Quiz ID</th>
+                <th>Name</th>
+                <th>Quiz Name</th>
+                <th>Date</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="quiz-results"></tbody>
+    </table>
+
+    <script>
+        async function loadQuizzes() {
+            const response = await fetch('/quizzes');
+            const quizzes = await response.json();
+
+            const resultsTable = document.getElementById('quiz-results');
+            quizzes.forEach(quiz => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${quiz.QuizID}</td>
+                    <td>${quiz.UserName}</td>
+                    <td>${quiz.QuizName}</td>
+                    <td>${new Date(quiz.DateTimeTaken).toLocaleString()}</td>
+                    <td>${quiz.Score}</td>
+                `;
+                resultsTable.appendChild(row);
+            });
+        }
+
+        loadQuizzes();
+    </script>
+</body>
+</html>

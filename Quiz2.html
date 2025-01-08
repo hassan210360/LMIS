@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+</head>
+<body>
+    <h1>Quiz</h1>
+    <form id="quiz-form">
+        <label for="userName">Your Name:</label>
+        <input type="text" id="userName" name="userName" required><br>
+
+        <label for="quizName">Quiz Name:</label>
+        <input type="text" id="quizName" name="quizName" required><br>
+
+        <p>1. What is the capital of France?</p>
+        <input type="radio" name="q1" value="Berlin"> Berlin<br>
+        <input type="radio" name="q1" value="Paris"> Paris<br>
+        <input type="radio" name="q1" value="Madrid"> Madrid<br>
+
+        <button type="button" onclick="submitQuiz()">Submit</button>
+    </form>
+
+    <script>
+        async function submitQuiz() {
+            const form = document.getElementById('quiz-form');
+            const formData = new FormData(form);
+            const score = formData.get('q1') === 'Paris' ? 1 : 0; // Simple scoring logic
+
+            const response = await fetch('/save-quiz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userName: formData.get('userName'),
+                    quizName: formData.get('quizName'),
+                    score
+                })
+            });
+
+            if (response.ok) {
+                alert('Quiz submitted successfully!');
+                form.reset();
+            } else {
+                alert('Failed to submit quiz.');
+            }
+        }
+    </script>
+</body>
+</html>
